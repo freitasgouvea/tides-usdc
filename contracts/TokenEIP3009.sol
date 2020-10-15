@@ -1,18 +1,18 @@
 // SPDX-License-Identifier: MIT
-// ERC20 adapted from: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol
+// Implementation Based on USDC-EIP-3009: https://github.com/CoinbaseStablecoin/eip-3009/tree/master/contracts
 
 pragma solidity 0.6.12;
 
+import "./ownership//ownable.sol";  
+import "./lifecycle/pausable.sol";
 import { SafeMath } from "./utils/SafeMath.sol";
 import { Address } from "./utils/Address.sol";
-
 import { IERC20Internal } from "./interfaces/IERC20Internal.sol";
-
 import { EIP3009Expanded } from "./interfaces/EIP3009Expanded.sol";
 import { EIP2612 } from "./interfaces/EIP2612.sol";
 import { EIP712 } from "./interfaces/EIP712.sol";
 
-contract TokenUSDC is IERC20Internal, EIP3009Expanded, EIP2612 {
+contract TokenEIP3009 is IERC20Internal, EIP3009Expanded, EIP2612, Onwnable, Pausable {
     using SafeMath for uint256;
     using Address for address;
 
@@ -49,62 +49,30 @@ contract TokenUSDC is IERC20Internal, EIP3009Expanded, EIP2612 {
         _mint(msg.sender, tokenTotalSupply);
     }
 
-    /**
-     * @notice Token name
-     * @return Name
-     */
     function name() external view returns (string memory) {
         return _name;
     }
 
-    /**
-     * @notice Token version
-     * @return Version
-     */
     function version() external view returns (string memory) {
         return _version;
     }
 
-    /**
-     * @notice Token symbol
-     * @return Symbol
-     */
     function symbol() external view returns (string memory) {
         return _symbol;
     }
 
-    /**
-     * @notice Number of decimal places
-     * @return Decimals
-     */
     function decimals() external view returns (uint8) {
         return _decimals;
     }
 
-    /**
-     * @notice Total amount of tokens in circulation
-     * @return Total supply
-     */
     function totalSupply() external view returns (uint256) {
         return _totalSupply;
     }
 
-    /**
-     * @notice Get the balance of an account
-     * @param account The account
-     * @return Balance
-     */
     function balanceOf(address account) external view returns (uint256) {
         return _balances[account];
     }
 
-    /**
-     * @notice Amount of remaining tokens spender is allowed to transfer on
-     * behalf of the token owner
-     * @param owner     Token owner's address
-     * @param spender   Spender's address
-     * @return Allowance amount
-     */
     function allowance(address owner, address spender)
         external
         view
@@ -113,25 +81,11 @@ contract TokenUSDC is IERC20Internal, EIP3009Expanded, EIP2612 {
         return _allowances[owner][spender];
     }
 
-    /**
-     * @notice Set spender's allowance over the caller's tokens to be a given
-     * value
-     * @param spender   Spender's address
-     * @param amount    Allowance amount
-     * @return True if successful
-     */
     function approve(address spender, uint256 amount) external returns (bool) {
         _approve(msg.sender, spender, amount);
         return true;
     }
 
-    /**
-     * @notice Transfer tokens by spending allowance
-     * @param sender    Payer's address
-     * @param recipient Payee's address
-     * @param amount    Transfer amount
-     * @return True if successful
-     */
     function transferFrom(
         address sender,
         address recipient,
@@ -149,12 +103,6 @@ contract TokenUSDC is IERC20Internal, EIP3009Expanded, EIP2612 {
         return true;
     }
 
-    /**
-     * @notice Transfer tokens from the caller
-     * @param recipient Payee's address
-     * @param amount    Transfer amount
-     * @return True if successful
-     */
     function transfer(address recipient, uint256 amount)
         external
         returns (bool)
@@ -163,12 +111,6 @@ contract TokenUSDC is IERC20Internal, EIP3009Expanded, EIP2612 {
         return true;
     }
 
-    /**
-     * @notice Increase the allowance by a given amount
-     * @param spender       Spender's address
-     * @param addedValue    Amount of increase in allowance
-     * @return True if successful
-     */
     function increaseAllowance(address spender, uint256 addedValue)
         external
         returns (bool)
@@ -177,12 +119,6 @@ contract TokenUSDC is IERC20Internal, EIP3009Expanded, EIP2612 {
         return true;
     }
 
-    /**
-     * @notice Decrease the allowance by a given amount
-     * @param spender           Spender's address
-     * @param subtractedValue   Amount of decrease in allowance
-     * @return True if successful
-     */
     function decreaseAllowance(address spender, uint256 subtractedValue)
         external
         returns (bool)

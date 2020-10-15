@@ -37,7 +37,7 @@
                     <a class="nav-link" href="faq.html">Info<i class="fa fa-info-circle ml-2"></i></a>
                 </li>
             </ul>
-            <button class="btn btn-lg btn-danger" onclick="return false;">Connect Wallet</button>
+            <button class="btn btn-lg btn-danger" onclick="load();">Connect Wallet</button>
         </div>
     </nav>
 
@@ -58,7 +58,7 @@
 
 
     <div class="jumbotron text-center text-white bg-dark" id="approve">
-        <form class="form my-2 my-lg-0" method="get" id="boletoForm" name="boletoForm">
+        <form class="form my-2 my-lg-0" method="post" id="approveForm" name="approveForm">
             <div class="row align-items-center">
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
@@ -71,38 +71,29 @@
                             <br>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text text-white bg-success" id="titulo">Address To</span>
+                                    <span class="input-group-text text-white bg-success">Address To</span>
                                 </div>
-                                <input type="text" class="form-control bg-white" id="addressTo" name="addressTo">
+                                <input type="text" class="form-control bg-white" id="recipientAddress" name="recipientAddress">
                             </div>
                             <div class="input-group mt-4 mb-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text text-white bg-success" id="titulo">Value to Approve</span>
+                                    <span class="input-group-text text-white bg-success">Value to Approve</span>
                                 </div>
                                 <input type="number" class="form-control bg-white" id="valueApprove" name="valueApprove">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text text-white bg-success" id="titulo">USDC</span>
+                                    <span class="input-group-text text-white bg-success">USDC</span>
                                 </div>
                             </div>
                             <div class="input-group mt-4 mb-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text text-white bg-success" id="titulo">Value to Gas Tx</span>
-                                </div>
-                                <input type="number" class="form-control bg-white" id="valueGasTx" name="valueGasTx">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text text-white bg-success" id="titulo">USDC</span>
-                                </div>
-                            </div>
-                            <div class="input-group mt-4 mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text text-white bg-success" id="titulo">Deadline of Approve</span>
+                                    <span class="input-group-text text-white bg-success">Deadline of Approve</span>
                                 </div>
                                 <input type="number" class="form-control bg-white" id="deadline" name="deadline">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text text-white bg-success" id="titulo">HOURS</span>
+                                    <span class="input-group-text text-white bg-success">HOURS</span>
                                 </div>
                             </div>
-                            <button class="btn btn-lg btn-success mt-4" onclick="return false;">Submit Approve</button>
+                            <button class="btn btn-lg btn-success mt-4" type="submit" onclick="submitApproval()">Submit Approve</button>
                         </div>
                     </div>
                 </div>
@@ -174,11 +165,6 @@
     <script>
         new ClipboardJS('.clipboard');
     </script>
-
-    <script>
-        load();
-    </script>
-
 
 </body>
 
