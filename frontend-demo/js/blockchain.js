@@ -58,20 +58,25 @@ async function submitApproval() {
             },
         };
 
+        console.log(data)
+
         const signature = await ethereum.request({
             method: "eth_signTypedData_v4",
             params: [userAddress, JSON.stringify(data)],
         });
+
+        console.log(signature)
 
         const v = "0x" + signature.slice(130, 132);
         const r = signature.slice(0, 66);
         const s = "0x" + signature.slice(66, 130);
 
         var localStorage = 'approves';
-        function addToLocalStorageArray(localStorage, data) {
+
+        function addToLocalStorageArray() {
             var existing = localStorage.getItem(localStorage);
             existing = existing ? existing.split(',') : [];
-            existing.push(data);
+            existing.push(JSON.stringify(data));
             localStorage.setItem(localStorage, existing.toString());
         };
     }
