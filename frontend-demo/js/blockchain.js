@@ -16,7 +16,7 @@ async function load() {
 }
 
 async function submitApproval() {
-    let x = document.getElementById("myForm");
+    let x = document.getElementById("approveForm");
     let name = await contractRead.name();
     let version = 1;
     let chainId = 42;
