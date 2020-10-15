@@ -16,46 +16,48 @@ async function load() {
 }
 
 async function submitApproval() {
-    let x = document.getElementById("approveForm");
-    let name = await contractRead.name();
-    let version = 1;
-    let chainId = 42;
-    let verifyingContract = contractAddress;
-    let data = {
-        types: {
-            EIP712Domain: [
-                { name: "name", type: "string" },
-                { name: "version", type: "string" },
-                { name: "chainId", type: "uint256" },
-                { name: "verifyingContract", type: "address" },
-            ],
-            TransferWithAuthorization: [
-                { name: "from", type: "address" },
-                { name: "to", type: "address" },
-                { name: "value", type: "uint256" },
-                { name: "validAfter", type: "uint256" },
-                { name: "validBefore", type: "uint256" },
-                { name: "nonce", type: "bytes32" },
-            ],
-        },
-        domain: {
-            name,
-            version,
-            chainId,
-            verifyingContract,
-        },
-        primaryType: "TransferWithAuthorization",
-        message: {
-            from: ethers.signer.getAddress(),
-            to: x.value.recipientAddress,
-            value: x.value.valueApprove.toString(10),
-            validAfter: 0,
-            validBefore: Math.floor(Date.now() / 1000) + 3600 * x.value.deadline, // Valid for an hour
-            nonce: ethers.utils.randomHex(32),
-        },
-    };
-
     try {
+
+        let x = document.getElementById("approveForm");
+        let name = await contractRead.name();
+        let version = 1;
+        let chainId = 42;
+        let verifyingContract = contractAddress;
+
+        let data = {
+            types: {
+                EIP712Domain: [
+                    { name: "name", type: "string" },
+                    { name: "version", type: "string" },
+                    { name: "chainId", type: "uint256" },
+                    { name: "verifyingContract", type: "address" },
+                ],
+                TransferWithAuthorization: [
+                    { name: "from", type: "address" },
+                    { name: "to", type: "address" },
+                    { name: "value", type: "uint256" },
+                    { name: "validAfter", type: "uint256" },
+                    { name: "validBefore", type: "uint256" },
+                    { name: "nonce", type: "bytes32" },
+                ],
+            },
+            domain: {
+                name,
+                version,
+                chainId,
+                verifyingContract,
+            },
+            primaryType: "TransferWithAuthorization",
+            message: {
+                from: ethers.signer.getAddress(),
+                to: x.value.recipientAddress,
+                value: x.value.valueApprove.toString(10),
+                validAfter: 0,
+                validBefore: Math.floor(Date.now() / 1000) + 3600 * x.value.deadline, // Valid for an hour
+                nonce: ethers.utils.randomHex(32),
+            },
+        };
+
         const signature = await ethereum.request({
             method: "eth_signTypedData_v4",
             params: [userAddress, JSON.stringify(data)],
