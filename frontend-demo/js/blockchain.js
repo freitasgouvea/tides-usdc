@@ -1,6 +1,16 @@
 let contractAddress = "0xAf2d007537e5a7eeBad315c26c0B6801fE566494";
+
+//ethers
 let providerRead = new ethers.providers.InfuraProvider('ropsten', 'd7af4ca348a2460aadd341988fee82fd');
 let contractRead = new ethers.Contract(contractAddress, contractABI, providerRead);
+let providerSign = new ethers.providers.Web3Provider(web3.currentProvider);
+let signer = providerSign.getSigner();
+let contractSign = new ethers.Contract(contractAddress, contractABI, signer);
+console.log(providerSign, signer, contractSign);
+
+//web3js
+const web3 = new Web3(Web3.givenProvider);
+console.log(web3)
 
 async function load() {
     let ethereum = window.ethereum;
