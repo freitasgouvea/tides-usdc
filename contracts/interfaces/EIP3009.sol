@@ -61,7 +61,7 @@ abstract contract EIP3009 is IERC20Internal, EIP712Domain {
         _requireValidAuthorization(from, nonce, validAfter, validBefore);
 
         bytes memory data = abi.encode(
-            TRANSFER_WITH_AUTHORIZATION_TYPEHASH,
+            keccak256(address from,address to,uint256 value,uint256 validAfter,uint256 validBefore,bytes32 nonce),
             from,
             to,
             value,

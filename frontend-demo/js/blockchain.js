@@ -2,14 +2,10 @@ let contractAddress = "0xAf2d007537e5a7eeBad315c26c0B6801fE566494";
 let providerRead = new ethers.providers.InfuraProvider('ropsten', 'd7af4ca348a2460aadd341988fee82fd');
 let contractRead = new ethers.Contract(contractAddress, contractABI, providerRead);
 
-
-
-const ethereumButton = document.querySelector('.enableEthereumButton');
-
-ethereumButton.addEventListener('click', () => {
-  //Will Start the metamask extension
-  ethereum.request({ method: 'eth_requestAccounts' });
-});
+async function load() {
+    let ethereum = window.ethereum;
+    await ethereum.enable();
+}
 
 async function submitApproval() {
     try {
