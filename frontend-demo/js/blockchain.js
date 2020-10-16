@@ -4,10 +4,12 @@ let contractRead = new ethers.Contract(contractAddress, contractABI, providerRea
 
 
 
-async function load() {
-    let ethereum = window.ethereum;
-    await ethereum.enable();
-}
+const ethereumButton = document.querySelector('.enableEthereumButton');
+
+ethereumButton.addEventListener('click', () => {
+  //Will Start the metamask extension
+  ethereum.request({ method: 'eth_requestAccounts' });
+});
 
 async function submitApproval() {
     try {
