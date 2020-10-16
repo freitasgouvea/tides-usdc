@@ -108,13 +108,6 @@ library EIP712 {
     }
 }
 
-abstract contract EIP712Domain {
-    /**
-     * @dev EIP712 Domain Separator
-     */
-    bytes32 public DOMAIN_SEPARATOR;
-}
-
 library SafeMath {
 
     function add(uint256 a, uint256 b) internal pure returns (uint256) {
@@ -262,6 +255,13 @@ abstract contract IERC20Internal {
     function _mint(address account, uint256 amount) internal virtual;
 
     function _burn(address account, uint256 amount) internal virtual;
+}
+
+abstract contract EIP712Domain {
+    /**
+     * @dev EIP712 Domain Separator
+     */
+    bytes32 public DOMAIN_SEPARATOR;
 }
 
 abstract contract EIP3009 is IERC20Internal, EIP712Domain {
