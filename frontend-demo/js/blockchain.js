@@ -11,10 +11,18 @@ console.log(providerSign, signer, contractSign);
 //web3js
 const web3 = new Web3(Web3.givenProvider);
 console.log(web3)
+const account = accounts[0];
+console.log(accounts[0])
 
 async function load() {
     let ethereum = window.ethereum;
     await ethereum.enable();
+}
+
+async function getAccount() {
+    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+    const account = accounts[0];
+    showAccount.innerHTML = account;
 }
 
 async function submitApproval() {
