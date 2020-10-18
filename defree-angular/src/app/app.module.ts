@@ -9,7 +9,12 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { LandingComponent } from './pages/landing/landing.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SidebarService } from './services/sidebar.service';
+import { MetamaskService } from './services/metamask.service';
 import { ApproveFormComponent } from './component/approve-form/approve-form.component';
+import { SendListComponent } from './component/send-list/send-list.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CustomFormsModule } from 'ngx-custom-validators';
+import {ApproveDataService} from './services/approve-data.service'
 
 @NgModule({
   declarations: [
@@ -18,16 +23,22 @@ import { ApproveFormComponent } from './component/approve-form/approve-form.comp
     SidebarComponent,
     FooterComponent,
     LandingComponent,
-    ApproveFormComponent
+    ApproveFormComponent,
+    SendListComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CustomFormsModule
   ],
   providers: [
     SidebarService,
+    MetamaskService,
+    ApproveDataService,
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

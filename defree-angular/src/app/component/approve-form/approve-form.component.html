@@ -1,82 +1,89 @@
 <div class="jumbotron text-white" id="approve">
-  <img src="../../../assets/images/042-shell.png" alt="HTML5 Icon" style="height: 30px; width:auto;">
+  <div class="text-center">
+    <img src="../../../assets/images/shell.png" alt="HTML5 Icon" style="height: 30px; width:auto;">
+  </div>
   <br>
   <h2 class="text-center">Approve a Transfer in USDC</h2>
   <br>
-  <h5 class="lead text-center mb-4">Approve a USDC transfer and pay pre-fixed transaction fee if transaction has done</h5>
+  <h5 class="lead text-center mb-4">Approve a USDC transfer and pay pre-fixed transaction fee if transaction has done
+  </h5>
   <br>
-  <form class="form my-2 my-lg-0" id="approveForm" name="approveForm">
-    <div class="row align-items-center">
-      <div class="col-md-6">
-        <div class="row text-left">
-          <div class="col-12">
-            <div class="card mb-3 mx-4" style="max-width: auto;">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-2">
-                    <img src="../../../assets/images/040-letter-of-marque.png" alt="HTML5 Icon" style="height: 50px; width:auto;">
-                  </div>
-                  <div class="col-10">
-                    <h5>Setup your approve and define the reciever, the ammount, the gas tip and the deadline of approve.</h5>
-                  </div>
+  <div class="row align-items-center">
+    <div class="col-md-6">
+      <div class="row text-left">
+        <div class="col-12">
+          <div class="card mb-3 mx-4" style="max-width: auto;">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-2">
+                  <img src="../../../assets/images/fox.png" alt="HTML5 Icon" style="height: 50px; width:auto;">
+                </div>
+                <div class="col-10">
+                  <h5>Connect your browser wallet - Metamask - to use DeFree and save ETH gas on pre-approved transactions.</h5>
                 </div>
               </div>
             </div>
-            <div class="card mb-3 mx-4" style="max-width: auto;">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-2">
-                    <img src="../../../assets/images/message-in-a-bottle.png" alt="HTML5 Icon" style="height: 50px; width:auto;">
-                  </div>
-                  <div class="col-10">
-                    <h5>Click on "Submit My Approve" and sign your approve message in your browser wallet.</h5>
-                  </div>
+          </div>
+          <div class="card mb-3 mx-4" style="max-width: auto;">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-2">
+                  <img src="../../../assets/images/040-letter-of-marque.png" alt="HTML5 Icon"
+                    style="height: 50px; width:auto;">
+                </div>
+                <div class="col-10">
+                  <h5>Setup and submit your approve with the reciever, the ammount, the gas tip and the deadline of the future Tx.
+                  </h5>
                 </div>
               </div>
             </div>
-            <div class="card mb-3 mx-4" style="max-width: auto;">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-2">
-                    <img src="../../../assets/images/compass.png" alt="HTML5 Icon" style="height: 50px; width:auto;">
-                  </div>
-                  <div class="col-10">
-                    <h5>Well done, your authorization will be valid until deadline and
-                      at any time you can cancel it.</h5>
-                  </div>
+          </div>
+          <div class="card mb-3 mx-4" style="max-width: auto;">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-2">
+                  <img src="../../../assets/images/feather.png" alt="HTML5 Icon"
+                    style="height: 50px; width:auto;">
+                </div>
+                <div class="col-10">
+                  <h5>Verify if the data is correct and Sign your approve message in your browser wallet to store your approve.</h5>
                 </div>
               </div>
             </div>
-            <div class="card mb-3 mx-4" style="max-width: auto;">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-2">
-                    <img src="../../../assets/images/whale.png" alt="HTML5 Icon" style="height: 50px; width:auto;">
-                  </div>
-                  <div class="col-10">
-                    <h5>If some Whale send your transaction to Ethereum you will only pay the approved gas tip in USDC.</h5>
-                  </div>
+          </div>
+          <div class="card mb-3 mx-4" style="max-width: auto;">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-2">
+                  <img src="../../../assets/images/message-in-a-bottle.png" alt="HTML5 Icon" style="height: 50px; width:auto;">
+                </div>
+                <div class="col-10">
+                  <h5>Well done, your authorization will be valid until deadline.
+                    If it happens you only pay the tip and
+                    at any time you can cancel it.</h5>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
       </div>
-      <div *ngIf="txOff == true" class="col-md-6">
+    </div>
+    <div *ngIf="phase == 'preTx'" class="col-md-6" id="formApproveBox">
+      <form [formGroup]="approveForm" (ngSubmit)="confirmApprove()">
         <div class="card border-white g-dark mb-3" style="max-width: auto;">
-          <div class="card-body mx-4">
-            <br>
-            <h4 class="text-center">Send your approve to DeFree Ocean</h4>
+          <div class="card-body text-center mx-4">
+            <h3 class="text-center">Send your approve to DeFree Ocean</h3>
             <br>
             <div class="form-group mb-3">
               <label class="form-label text-left">Ethereum Address to Receive USDC</label>
-              <input type="text" class="form-control bg-white" id="recipientAddress" name="recipientAddress">
+              <input type="text" class="form-control bg-white" id="recipientAddress" name="recipientAddress"
+                formControlName="recipientAddress">
             </div>
             <div class="form-group mb-3">
               <label class="form-label text-left">Value to Approve (to receiver)</label>
               <div class="input-group">
-                <input type="number" class="form-control bg-white" id="valueApprove" name="valueApprove">
+                <input type="number" class="form-control bg-white" id="valueApprove" name="valueApprove"
+                  formControlName="valueApprove">
                 <div class="input-group-prepend">
                   <span class="input-group-text text-white bg-info">USDC</span>
                 </div>
@@ -85,7 +92,7 @@
             <div class="form-group mb-3 mt-3">
               <label class="form-label text-left">Value of tip to whale (to caller)</label>
               <div class="input-group">
-                <input type="number" class="form-control bg-white" id="valueApprove" name="valueApprove">
+                <input type="number" class="form-control bg-white" id="gasFee" name="gasFee" formControlName="gasFee">
                 <div class="input-group-prepend">
                   <span class="input-group-text text-white bg-info">USDC</span>
                 </div>
@@ -94,7 +101,8 @@
             <div class="form-group mb-3 mt-3">
               <label class="form-label text-left">Deadline of Approve</label>
               <div class="input-group">
-                <input type="number" class="form-control bg-white" id="deadline" name="deadline">
+                <input type="number" class="form-control bg-white" id="deadline" name="deadline"
+                  formControlName="deadline">
                 <div class="input-group-prepend">
                   <span class="input-group-text text-white bg-info">HOURS</span>
                 </div>
@@ -103,7 +111,21 @@
             <button class="btn btn-lg btn-info mt-2" type="submit">Submit My Approve</button>
           </div>
         </div>
+      </form>
+    </div>
+    <div *ngIf="phase == 'unconnected'" class="col-md-6" id="connectMetamaskBox">
+      <div class="card border-white g-dark mb-3" style="max-width: auto;">
+        <div style=" margin-top: 140px; margin-bottom: 140px; align-content: center">
+          <div class="card-body text-center mx-4">
+            <img class="mb-4" src="../../../assets/images/fox (1).png" alt="HTML5 Icon"
+              style="height: 100px; width:auto;">
+            <br>
+            <h3 class="text-center">Connect your browser wallet to sign messages</h3>
+            <br>
+            <button class="btn btn-lg btn-danger" (click)="connectMetamask()">Connect Wallet</button>
+          </div>
+        </div>
       </div>
     </div>
-  </form>
+  </div>
 </div>

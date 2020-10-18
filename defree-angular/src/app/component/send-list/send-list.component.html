@@ -1,0 +1,63 @@
+<div class="jumbotron text-white" id="approve">
+  <img src="../../../assets/images/shell.png" alt="HTML5 Icon" style="height: 30px; width:auto;">
+  <br>
+  <h2 class="text-center">Send Transfers and Earn USDC</h2>
+  <br>
+  <h5 class="lead text-center mb-4">
+    Here you can see all the active approvals, select some, execute the transaction and receive the GAS TIP approved by the sender</h5>
+  <br>
+  <div class="row align-items-center">
+    <div class="col-md-12">
+      <div class="card border-white g-dark mb-3" style="max-width: auto;">
+        <div class="card-body mx-4">
+          <form>
+            <div class="form-group form-inline">
+              Filter By Address: <input class="form-control ml-2" type="text" name="searchTerm"
+                [(ngModel)]="approveService.searchTerm" />
+              <span class="ml-3" *ngIf="approveService.loading$ | async">Loading...</span>
+            </div>
+            <table class="table table-striped table-responsive-lg bg-white text-dark">
+              <thead>
+                <tr>
+                  <th scope="col" sortable="addressFrom" (sort)="onSort($event)">From</th>
+                  <th scope="col" sortable="addressTo" (sort)="onSort($event)">To</th>
+                  <th scope="col" sortable="gasFee" (sort)="onSort($event)">Approved Value</th>
+                  <th scope="col" sortable="gasFee" (sort)="onSort($event)">Gas Tip</th>
+                  <th scope="col">Select</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let approve of approves$ | async">
+                  <td>
+                    <ngb-highlight [result]="approve.addressFrom" [term]="approveService.searchTerm"></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="approve.addressTo" [term]="approveService.searchTerm"></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="approve.approvedValue" [term]="approveService.searchTerm"></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="approve.gasFee" [term]="approveService.searchTerm"></ngb-highlight>
+                  </td>
+                  <td>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="d-flex justify-content-between p-2">
+              <ngb-pagination [collectionSize]="(total$ | async)!" [(page)]="approveService.page"
+                [pageSize]="approveService.pageSize">
+              </ngb-pagination>
+              <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="approveService.pageSize">
+                <option [ngValue]="10">10 items per page</option>
+                <option [ngValue]="20">20 items per page</option>
+                <option [ngValue]="30">30 items per page</option>
+              </select>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

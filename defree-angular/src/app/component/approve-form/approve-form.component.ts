@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { CustomValidators } from 'ngx-custom-validators';
+import { MetamaskService } from 'src/app/services/metamask.service';
 
 @Component({
   selector: 'app-approve-form',
@@ -7,12 +10,38 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ApproveFormComponent implements OnInit {
 
-  txOff;
+  phase: string;
+  approveForm: FormGroup;
+  dataMessage: string;
+  userAddress;
 
-  constructor() { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private metamaskService: MetamaskService
+  ) {
+    this.approveForm = this.formBuilder.group({
+      recipientAddress: [''],
+      valueApprove: [''],
+      gasFee: [''],
+      deadline: [''],
+    });
+  }
 
   ngOnInit(): void {
-    this.txOff = true;
+    this.phase = "preTx";
+  }
+
+  connectMetamask(){
+    this.metamaskService.connectWallet();
+  }
+
+  get f() { return this.approveForm.controls; }
+
+  async confirmApprove() {
+    this.userAddress = await this.metamaskService.getAccount();
+    console.log(this.userAddress)
+    const approve = await this.metamaskService.signApprove(this.userAddress, this.f.recipientAddress.value, this.f.valueApprove.value, this.f.deadline.value);
+    console.log(approve)
   }
 
 }
