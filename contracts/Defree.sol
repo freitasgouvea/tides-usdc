@@ -9,14 +9,11 @@ import { IERC20_EIP3009 } from "./interfaces/IERC20_EIP3009.sol";
 
 contract Defree {
     
-  
     //address of pool wallet
     address DefreePoolWallet;
     
     //IERC20_EIP3009 public ERC20Interface;
     address public USDCAddress;
-
-    event TransferFailed(address indexed authorizer, bytes32 indexed nonce);
 
     // (address,address,uint256,uint256,uint256,bytes32) = 20*2 + 32*4 = 168
     uint256 private constant _TRANSFER_PARAM_SIZE = 168;
@@ -24,6 +21,8 @@ contract Defree {
     uint256 private constant _SIGNATURE_SIZE = 65;
     // keccak256("transferWithAuthorization(address,address,uint256,uint256,uint256,bytes32,uint8,bytes32,bytes32)")[0:4]
     bytes4 private constant _TRANSFER_WITH_AUTHORIZATION_SELECTOR = 0xe3ee160e;
+
+    event TransferFailed(address indexed authorizer, bytes32 indexed nonce);
 
     event DepositSuccessful(address indexed _from, address indexed _to, uint256 _amount);  
     
