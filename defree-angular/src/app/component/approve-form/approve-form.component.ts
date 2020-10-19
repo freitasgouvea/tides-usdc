@@ -40,7 +40,7 @@ export class ApproveFormComponent implements OnInit {
   async confirmApprove() {
     this.userAddress = await this.metamaskService.getAccount();
     console.log(this.userAddress)
-    const approve = await this.metamaskService.signApprove(this.userAddress, this.f.recipientAddress.value, this.f.valueApprove.value, this.f.deadline.value);
+    const approve = await this.metamaskService.signApprove(this.userAddress, this.f.recipientAddress.value, this.f.valueApprove.value, this.f.gasFee.value, this.f.deadline.value);
     console.log(approve)
   }
 

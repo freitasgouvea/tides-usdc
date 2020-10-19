@@ -9,17 +9,16 @@ export class ApproveDataService extends BaseService {
     super();
   }
 
-  public saveApproveLocalStorage(any) {
-    this.LocalStorage.set(LocalStorageKeys.approves, any);
+  public saveApproveLocalStorage(data) {
+    this.LocalStorage.set(LocalStorageKeys.approves, data);
   }
 
-  public getApproveLocalStorage(): string {
+  public getApproveLocalStorage(): any {
     return this.LocalStorage.get(LocalStorageKeys.approves);
   }
 
   public removeApproveStorage() {
     this.LocalStorage.remove(LocalStorageKeys.approves);
   }
-
 
 }

@@ -6,18 +6,18 @@ import { ApproveDataService } from './approve-data.service';
 const web3 = new Web3(Web3.givenProvider);
 
 @Injectable({
-	providedIn: 'root',
+  providedIn: 'root',
 })
 export class MetamaskService {
 
   account;
   tokenAddress = "0xAf2d007537e5a7eeBad315c26c0B6801fE566494";
 
-	constructor(
+  constructor(
     private approveDataService: ApproveDataService
   ) { }
 
-	connectWallet(){
+  connectWallet() {
     window['ethereum'].request({ method: 'eth_requestAccounts' });
   }
 
@@ -26,8 +26,7 @@ export class MetamaskService {
     return accounts[0];
   }
 
-  async signApprove(userAddress: string, recipientAddress: string, amountBN: number, deadline: number ){
-
+  async signApprove(userAddress: string, recipientAddress: string, amountBN: number, gasFee: number, deadline: number) {
     const data = {
       types: {
         EIP712Domain: [
@@ -71,11 +70,26 @@ export class MetamaskService {
     const r = signaturePrincipal.slice(0, 66);
     const s = "0x" + signaturePrincipal.slice(66, 130);
 
-    console.log(JSON.stringify(data));
+    var approves = JSON.parse(localStorage.getItem('approves') || '[]');
+    approves.push({
+      addressFrom: userAddress,
+      addressTo: recipientAddress,
+      valueApprove: amountBN,
+      deadline: data.message.validBefore,
+      gasFee: gasFee,
+      nonce: data.message.nonce,
+      v: v,
+      r: r,
+      s: s,
+      status: true,
+      type: 'mainTx'
+    });
 
-    this.approveDataService.saveApproveLocalStorage(JSON.stringify(data));
+    localStorage.setItem("approves", JSON.stringify(approves));
 
-    return(true)
+    console.log('Salva com sucesso.');
+
+    return (true)
 
   }
 

@@ -1,7 +1,7 @@
 import {Injectable, PipeTransform} from '@angular/core';
 import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 import {Approve} from '../model/approval';
-import {APPROVES} from '../mocks/APPROVES';
+//import {APPROVES} from '../mocks/APPROVES';
 import {DecimalPipe} from '@angular/common';
 import {debounceTime, delay, switchMap, tap} from 'rxjs/operators';
 import {SortColumn, SortDirection} from '../helpers/approve.directive';
@@ -39,6 +39,9 @@ function matches(approve: Approve, term: string, pipe: PipeTransform) {
 @Injectable({providedIn: 'root'})
 
 export class ApproveTableService {
+
+  APPROVES = JSON.parse(localStorage.getItem('approves'));
+
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
   private _approves$ = new BehaviorSubject<Approve[]>([]);
@@ -63,7 +66,6 @@ export class ApproveTableService {
       this._approves$.next(result.approves);
       this._total$.next(result.total);
     });
-
     this._search$.next();
   }
 
@@ -87,12 +89,13 @@ export class ApproveTableService {
 
   private _search(): Observable<SearchResult> {
     const {sortColumn, sortDirection, pageSize, page, searchTerm} = this._state;
+    const activeApproves = this.APPROVES.filter(approve => approve.deadline > (Date.now() / 1000))
 
     // 1. sort
-    let approves = sort(APPROVES, sortColumn, sortDirection);
+    let approves = sort(activeApproves, sortColumn, sortDirection);
 
     // 2. filter
-    approves = approves.filter(country => matches(country, searchTerm, this.pipe));
+    approves = approves.filter(approve => matches(approve, searchTerm, this.pipe));
     const total = approves.length;
 
     // 3. paginate
