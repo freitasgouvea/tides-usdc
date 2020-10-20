@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark">
-  <a class="navbar-brand" href="index.html">DeFree <img class="ml-2"
+  <a class="navbar-brand" href="index.html">Tides <img class="ml-2"
       src="../../../assets/images/timao.png" alt="HTML5 Icon" style="height: 30px; width:auto;">
   </a>
   <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed" data-toggle="collapse"
@@ -20,6 +20,7 @@
         <a class="nav-link" href="faq.html">Info<i class="fa fa-info-circle ml-2"></i></a>
       </li>
     </ul>
-    <button class="btn btn-lg btn-danger" (click)="connectMetamask()">Connect Wallet</button>
+    <button *ngIf="userAddress == '0x00'" class="btn btn-lg btn-danger" (click)="connectMetamask()">Connect Wallet</button>
+    <a class="">{{userAddress}}</a>
   </div>
 </nav>

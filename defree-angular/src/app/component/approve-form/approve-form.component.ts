@@ -20,10 +20,10 @@ export class ApproveFormComponent implements OnInit {
     private metamaskService: MetamaskService
   ) {
     this.approveForm = this.formBuilder.group({
-      recipientAddress: [''],
-      valueApprove: [''],
-      gasFee: [''],
-      deadline: [''],
+      recipientAddress: ['', Validators.required],
+      valueApprove: ['', Validators.required, Validators.pattern("^[0-9]*$")],
+      gasFee: ['', Validators.required, Validators.pattern("^[0-9]*$")],
+      deadline: ['', Validators.required, Validators.pattern("^[0-9]*$")],
     });
   }
 
@@ -38,6 +38,9 @@ export class ApproveFormComponent implements OnInit {
   get f() { return this.approveForm.controls; }
 
   async confirmApprove() {
+    if(this.phase == "unconnected"){
+      return window.alert('You need to connect Metamask for use this site.')
+    }
     this.phase = "approveGasFee";
     this.userAddress = await this.metamaskService.getAccount();
     const approveGasFee = await this.metamaskService.signGasFeeApprove(this.userAddress, this.f.gasFee.value, this.f.deadline.value);
@@ -47,11 +50,15 @@ export class ApproveFormComponent implements OnInit {
       if (approveTx == true) {
         this.phase = "congratulations";
       } else {
-        this.phase = "falied";
+        this.phase = "preTx";
       }
     } else {
-      this.phase = "falied";
+      this.phase = "preTx";
     }
+  }
+
+  newApprove(){
+    this.phase = 'preTx';
   }
 
 }

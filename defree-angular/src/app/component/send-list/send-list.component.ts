@@ -19,7 +19,7 @@ export class SendListComponent implements OnInit {
   totalGasFee: number;
   txOff;
   approves: Approve[];
-  ActiveApproves;
+  activeApproves;
 
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
@@ -33,15 +33,20 @@ export class SendListComponent implements OnInit {
     this.txOff = true;
     this.approves = JSON.parse(localStorage.getItem('approvesTxs'));
     if (this.approves !== null) {
-      this.ActiveApproves = this.approves.filter(approve => approve.deadline > (Date.now() / 1000) && approve.type == 'mainTx');
-      this.ActiveApproves.forEach(() => this.totalTxs = this.totalTxs + 1);
-      for (let approve of this.ActiveApproves) {
+      this.activeApproves = this.approves.filter(approve => approve.deadline > (Date.now() / 1000) && approve.type == 'mainTx');
+      this.activeApproves.forEach(() => this.totalTxs = this.totalTxs + 1);
+      console.log(this.totalGasFee)
+      for (let approve of this.activeApproves) {
         this.totalGasFee = this.totalGasFee + approve.gasFee;
       }
     } else {
       this.totalTxs = 0;
       this.totalGasFee = 0;
     }
+  }
+
+  refreshTxs(){
+    this.ngOnInit();
   }
 
   sendTxs() {

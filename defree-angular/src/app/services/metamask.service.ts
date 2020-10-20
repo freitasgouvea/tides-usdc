@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {} from 'eth-sig-util';
+import { } from 'eth-sig-util';
 import Web3 from 'web3';
 
 const web3 = new Web3(Web3.givenProvider);
@@ -19,12 +19,20 @@ export class MetamaskService {
     window['ethereum'].request({ method: 'eth_requestAccounts' });
   }
 
-  async getAccount() {
-    const accounts = await window['ethereum'].request({ method: 'eth_requestAccounts' });
-    return accounts[0];
+  async isConnected() {
+    const connected = window['ethereum'].isConnected();
+    return connected
   }
 
-  async signGasFeeApprove(userAddress: string, gasFee: number, deadline: number){
+  async getAccount() {
+    if (window['ethereum'].on) {
+      const accounts = await window['ethereum'].request({ method: 'eth_requestAccounts' });
+      return accounts[0];
+    }
+    return "0x00"
+  }
+
+  async signGasFeeApprove(userAddress: string, gasFee: number, deadline: number) {
     try {
       const data = {
         types: {
@@ -73,7 +81,7 @@ export class MetamaskService {
           console.log(error)
         });
         */
-      ;
+        ;
 
       const v = "0x" + signaturePrincipal.slice(130, 132);
       const r = signaturePrincipal.slice(0, 66);
@@ -83,7 +91,7 @@ export class MetamaskService {
 
       var id = 0;
 
-      if(localStorage.getItem('approvesTxs') == null){
+      if (localStorage.getItem('approvesFees') == null) {
         id = 1;
       } else {
         id = localStorage.getItem('approvesFees').length + 1;
@@ -115,7 +123,7 @@ export class MetamaskService {
     }
   }
 
-  async signTxApprove(userAddress: string, recipientAddress: string, amountBN: number, gasFee: number, deadline: number){
+  async signTxApprove(userAddress: string, recipientAddress: string, amountBN: number, gasFee: number, deadline: number) {
     try {
       const data = {
         types: {
@@ -164,7 +172,7 @@ export class MetamaskService {
           console.log(error)
         });
         */
-      ;
+        ;
 
       const v = "0x" + signaturePrincipal.slice(130, 132);
       const r = signaturePrincipal.slice(0, 66);
@@ -174,10 +182,10 @@ export class MetamaskService {
 
       var id = 0;
 
-      if(localStorage.getItem('approvesTxs') == null){
+      if (localStorage.getItem('approvesTxs') == null) {
         id = 1;
       } else {
-        id = localStorage.getItem('approvesFees').length + 1;
+        id = localStorage.getItem('approvesTxs').length + 1;
       }
 
       approvesTxs.push({

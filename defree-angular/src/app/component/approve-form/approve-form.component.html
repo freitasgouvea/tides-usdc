@@ -134,9 +134,9 @@
       <div class="card border-white g-dark mb-3" style="max-width: auto;">
         <div style=" margin-top: 140px; margin-bottom: 140px; align-content: center">
           <div class="card-body text-center mx-4">
-            <img class="mb-4" src="../../../assets/images/whale (3).png" alt="HTML5 Icon"
-              style="height: 100px; width:auto;">
             <img class="mb-4" src="../../../assets/images/feather (2).png" alt="HTML5 Icon"
+            style="height: 100px; width:auto;">
+            <img class="mb-4" src="../../../assets/images/whale (2).png" alt="HTML5 Icon"
               style="height: 100px; width:auto;">
             <br>
             <h3 class="text-center">Sign the Approve of GAS TIP on your browser wallet</h3>
@@ -149,12 +149,12 @@
       <div class="card border-white g-dark mb-3" style="max-width: auto;">
         <div style=" margin-top: 140px; margin-bottom: 140px; align-content: center">
           <div class="card-body text-center mx-4">
-            <img class="mb-4" src="../../../assets/images/fox (1).png" alt="HTML5 Icon"
-              style="height: 100px; width:auto;">
-            <img class="mb-4" src="../../../assets/images/letter-of-marque (1).png" alt="HTML5 Icon"
+            <img class="mb-4" src="../../../assets/images/feather (2).png" alt="HTML5 Icon"
+            style="height: 100px; width:auto;">
+            <img class="mb-4" src="../../../assets/images/treasure (1).png" alt="HTML5 Icon"
               style="height: 100px; width:auto;">
             <br>
-            <h3 class="text-center">Sign the Approve of MAIN TX on your browser wallet</h3>
+            <h3 class="text-center">Sign the Approve of TX on your browser wallet</h3>
             <br>
           </div>
         </div>
@@ -162,14 +162,15 @@
     </div>
     <div *ngIf="phase == 'congratulations'" class="col-md-6" id="connectMetamaskBox">
       <div class="card border-white g-dark mb-3" style="max-width: auto;">
-        <div style=" margin-top: 140px; margin-bottom: 140px; align-content: center">
+        <div style=" margin-top: 140px; margin-bottom: 100px; align-content: center">
           <div class="card-body text-center mx-4">
             <img class="mb-4" src="../../../assets/images/island.png" alt="HTML5 Icon"
               style="height: 100px; width:auto;">
             <br>
-            <h3 class="text-center">Now relax, your approved was submitted and can be called until the deadline.</h3>
+            <h4 class="text-center">Congratulations, your approved was submitted and can be called until the deadline.</h4>
             <br>
-            <a class="btn btn-lg btn-danger" href="#sendList">Connect Wallet</a>
+            <a class="btn btn-success" href="#sendList">See Approves</a>
+            <a class="btn btn-info" (click)="newApprove()">New Approve</a>
           </div>
         </div>
       </div>
