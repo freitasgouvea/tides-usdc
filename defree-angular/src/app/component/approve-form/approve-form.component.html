@@ -5,7 +5,7 @@
   <br>
   <h2 class="text-center">Approve a Transfer in USDC</h2>
   <br>
-  <h5 class="lead text-center mb-4">Approve a USDC transfer and pay pre-fixed transaction fee if transaction has done
+  <h5 class="lead text-center mb-4">Here you can approve a USDC transfer and pay pre-fixed transaction tip in USDC if transaction has done
   </h5>
   <br>
   <div class="row align-items-center">
@@ -19,8 +19,7 @@
                   <img src="../../../assets/images/fox (2).png" alt="HTML5 Icon" style="height: 50px; width:auto;">
                 </div>
                 <div class="col-10">
-                  <h5>Connect your browser wallet - Metamask - to use DeFree and save ETH gas on pre-approved
-                    transactions.</h5>
+                  <h5>Connect your wallet - Metamask - to submit your pre-approved USDC transfer.</h5>
                 </div>
               </div>
             </div>
@@ -33,9 +32,7 @@
                     style="height: 50px; width:auto;">
                 </div>
                 <div class="col-10">
-                  <h5>Setup and submit your approve with the reciever, the ammount, the gas tip and the deadline of the
-                    future Tx.
-                  </h5>
+                  <h5>Setup the address of receiver, the amount of TRANSFER, the GAS TIP and the deadline.</h5>
                 </div>
               </div>
             </div>
@@ -44,11 +41,26 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-2">
-                  <img src="../../../assets/images/feather (2).png" alt="HTML5 Icon" style="height: 50px; width:auto;">
+                  <img src="../../../assets/images/feather (2).png" alt="HTML5 Icon" style="height: 30px; width:auto;">
+                  <img class="mb-4" src="../../../assets/images/treasure (1).png" alt="HTML5 Icon"
+                  style="height: 30px; width:auto;">
                 </div>
                 <div class="col-10">
-                  <h5>Verify if the data is correct and Sign your approve message in your browser wallet to store your
-                    approve.</h5>
+                  <h5>Verify and sign GAS TIP transfer approve message in your browser.</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card mb-3 mx-4" style="max-width: auto;">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-2">
+                  <img src="../../../assets/images/feather (2).png" alt="HTML5 Icon" style="height: 30px; width:auto;">
+                  <img class="mb-4" src="../../../assets/images/treasure (1).png" alt="HTML5 Icon"
+                  style="height: 30px; width:auto;">
+                </div>
+                <div class="col-10">
+                  <h5>Verify and sign main TRANSFER approve message in your browser.</h5>
                 </div>
               </div>
             </div>
@@ -61,9 +73,7 @@
                     style="height: 50px; width:auto;">
                 </div>
                 <div class="col-10">
-                  <h5>Well done, your authorization will be valid until deadline.
-                    If it happens you only pay the tip and
-                    at any time you can cancel it.</h5>
+                  <h5>Your approved TRANSFER is open and if its done you will only pay de GAS TIP.</h5>
                 </div>
               </div>
             </div>
@@ -75,7 +85,10 @@
       <form [formGroup]="approveForm" (ngSubmit)="confirmApprove()">
         <div class="card border-white g-dark mb-3" style="max-width: auto;">
           <div class="card-body text-center mx-4">
-            <h3 class="text-center">Send your Transfer Approve</h3>
+            <img src="../../../assets/images/letter-of-marque (1).png" alt="HTML5 Icon"
+            style="height: 35px; width:auto;">
+            <br>
+            <h3 class="text-center mt-3">Send your Transfer Approve</h3>
             <br>
             <div class="form-group mb-3">
               <label class="form-label text-left">Ethereum Address to Receive USDC</label>
