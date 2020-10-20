@@ -14,7 +14,6 @@ import { ApproveFormComponent } from './component/approve-form/approve-form.comp
 import { SendListComponent } from './component/send-list/send-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ngx-custom-validators';
-import {ApproveDataService} from './services/approve-data.service'
 
 @NgModule({
   declarations: [
@@ -37,8 +36,7 @@ import {ApproveDataService} from './services/approve-data.service'
   ],
   providers: [
     SidebarService,
-    MetamaskService,
-    ApproveDataService,
+    MetamaskService
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

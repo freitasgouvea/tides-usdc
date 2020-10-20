@@ -1,4 +1,5 @@
 export interface Approve {
+  id: number,
   addressFrom: string;
   addressTo: string;
   valueApprove: string;
@@ -8,5 +9,6 @@ export interface Approve {
   v: number;
   r: string;
   s: string;
-  status: string;
+  status: boolean;
+  type: string;
 }

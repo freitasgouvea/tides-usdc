@@ -2,56 +2,50 @@ import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Approve } from '../../model/approval';
-import { ApproveTableService } from '../../services/approval-table.service';
 import { NgbdSortableHeader, SortEvent } from '../../helpers/approve.directive';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MetamaskService } from 'src/app/services/metamask.service';
 
 @Component({
   selector: 'app-send-list',
   templateUrl: './send-list.component.html',
   styleUrls: ['./send-list.component.css'],
-  providers: [ApproveTableService, DecimalPipe]
+  providers: [DecimalPipe]
 })
 export class SendListComponent implements OnInit {
 
-  approves$: Observable<Approve[]>;
-  total$: Observable<number>;
   form: FormGroup;
   totalTxs: number;
   totalGasFee: number;
   txOff;
-  APPROVES = JSON.parse(localStorage.getItem('approves'));
+  approves: Approve[];
   ActiveApproves;
 
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
   constructor(
-    public approveService: ApproveTableService,
-    private formBuilder: FormBuilder
-    ) {
-    this.approves$ = approveService.approves$;
-    this.total$ = approveService.total$;
-    this.totalTxs = 0;
-    this.totalGasFee = 0;
+    private formBuilder: FormBuilder,
+    private metamaskService: MetamaskService
+  ) {
   }
 
   ngOnInit(): void {
     this.txOff = true;
-    this.ActiveApproves = this.APPROVES.filter(approve => approve.deadline > (Date.now() / 1000));
-    this.ActiveApproves.forEach(() => this.totalTxs = this.totalTxs + 1);
-    for (let approve of this.ActiveApproves) {
-      this.totalGasFee = this.totalGasFee + approve.gasFee;
+    this.approves = JSON.parse(localStorage.getItem('approvesTxs'));
+    if (this.approves !== null) {
+      this.ActiveApproves = this.approves.filter(approve => approve.deadline > (Date.now() / 1000) && approve.type == 'mainTx');
+      this.ActiveApproves.forEach(() => this.totalTxs = this.totalTxs + 1);
+      for (let approve of this.ActiveApproves) {
+        this.totalGasFee = this.totalGasFee + approve.gasFee;
+      }
+    } else {
+      this.totalTxs = 0;
+      this.totalGasFee = 0;
     }
   }
 
-  onSort({ column, direction }: SortEvent) {
-    this.headers.forEach(header => {
-      if (header.sortable !== column) {
-        header.direction = '';
-      }
-    });
-    this.approveService.sortColumn = column;
-    this.approveService.sortDirection = direction;
+  sendTxs() {
+
   }
 
 }

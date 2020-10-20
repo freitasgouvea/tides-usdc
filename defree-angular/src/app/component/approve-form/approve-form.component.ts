@@ -31,17 +31,27 @@ export class ApproveFormComponent implements OnInit {
     this.phase = "preTx";
   }
 
-  connectMetamask(){
+  connectMetamask() {
     this.metamaskService.connectWallet();
   }
 
   get f() { return this.approveForm.controls; }
 
   async confirmApprove() {
+    this.phase = "approveGasFee";
     this.userAddress = await this.metamaskService.getAccount();
-    console.log(this.userAddress)
-    const approve = await this.metamaskService.signApprove(this.userAddress, this.f.recipientAddress.value, this.f.valueApprove.value, this.f.gasFee.value, this.f.deadline.value);
-    console.log(approve)
+    const approveGasFee = await this.metamaskService.signGasFeeApprove(this.userAddress, this.f.gasFee.value, this.f.deadline.value);
+    if (approveGasFee == true) {
+      this.phase = "approveTx";
+      const approveTx = await this.metamaskService.signTxApprove(this.userAddress, this.f.recipientAddress.value, this.f.valueApprove.value, this.f.gasFee.value, this.f.deadline.value);
+      if (approveTx == true) {
+        this.phase = "congratulations";
+      } else {
+        this.phase = "falied";
+      }
+    } else {
+      this.phase = "falied";
+    }
   }
 
 }
