@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark">
-  <a class="navbar-brand" href="index.html">TIDES <img class="ml-2"
+  <a class="navbar-brand" href="index.html">TIDES<img class="ml-2"
       src="../../../assets/images/timao.png" alt="HTML5 Icon" style="height: 30px; width:auto;">
   </a>
   <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed" data-toggle="collapse"
@@ -11,16 +11,10 @@
   <div class="collapse navbar-collapse" id="navbarColor01">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#approval">Approve<i class="fa fa-plus-circle ml-2"></i></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#approval">Send<i class="fa fa-plus-circle ml-2"></i></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="faq.html">Info<i class="fa fa-info-circle ml-2"></i></a>
+        <a class="nav-link" href="#info">Info<i class="fa fa-info-circle ml-2"></i></a>
       </li>
     </ul>
-    <button *ngIf="userAddress == '0x00'" class="btn btn-lg btn-danger" (click)="connectMetamask()">Connect Wallet</button>
+    <button class="btn btn-lg btn-danger" (click)="connectMetamask()">Connect Wallet</button>
     <a class="">{{userAddress}}</a>
   </div>
 </nav>

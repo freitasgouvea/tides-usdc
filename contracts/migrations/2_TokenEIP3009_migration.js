@@ -2,8 +2,6 @@ const Migrations = artifacts.require("TokenEIP3009");
 
 require('dotenv').config();
 
-console.log(process.env.TOKEN_NAME);
-
 const tokenName = process.env.TOKEN_NAME;
 const tokenVersion = process.env.TOKEN_VERSION;
 const tokenSymbol = process.env.TOKEN_SYMBOL;

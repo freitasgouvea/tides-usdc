@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { } from 'eth-sig-util';
 import Web3 from 'web3';
+import '../../../abi/defree.abi'
 
 const web3 = new Web3(Web3.givenProvider);
+//var contract = new web3.eth.Contract(abi, "0xAf2d007537e5a7eeBad315c26c0B6801fE566494");
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +12,7 @@ const web3 = new Web3(Web3.givenProvider);
 export class MetamaskService {
 
   account;
-  tokenAddress = "0xAf2d007537e5a7eeBad315c26c0B6801fE566494";
+  tokenAddress = "0xde137D57348E94721542601fA47e4aF14440700F";
   tidesAddress = "0xAf2d007537e5a7eeBad315c26c0B6801fE566494";
 
   constructor() { }
@@ -52,8 +54,8 @@ export class MetamaskService {
           ],
         },
         domain: {
-          name: "USDC RIP3309",
-          version: 1,
+          name: "USDC EIP3309",
+          version: 2,
           chainId: 3,
           verifyingContract: this.tokenAddress,
         },
@@ -87,6 +89,10 @@ export class MetamaskService {
       const r = signaturePrincipal.slice(0, 66);
       const s = "0x" + signaturePrincipal.slice(66, 130);
 
+
+      const packParams = this.prepend0x(this.packParams(userAddress, this.tidesAddress, gasFee.toString(10), 0, data.message.validBefore, data.message.nonce))
+      const packSigns = this.prepend0x(this.packSignatures(parseInt(v, 16),r,s));
+
       var approvesFees = JSON.parse(localStorage.getItem('approvesFees') || '[]');
 
       var id = 0;
@@ -94,7 +100,7 @@ export class MetamaskService {
       if (localStorage.getItem('approvesFees') == null) {
         id = 1;
       } else {
-        id = localStorage.getItem('approvesFees').length + 1;
+        id = JSON.parse(localStorage.getItem('approvesFees')).length + 1 ;
       }
 
       approvesFees.push({
@@ -110,6 +116,8 @@ export class MetamaskService {
         s: s,
         status: true,
         type: 'gasFeeTx',
+        packParam: packParams,
+        packSign: packSigns
       });
 
       localStorage.setItem("approvesFees", JSON.stringify(approvesFees));
@@ -143,8 +151,8 @@ export class MetamaskService {
           ],
         },
         domain: {
-          name: "USDC RIP3309",
-          version: 1,
+          name: "USDC EIP3309",
+          version: 2,
           chainId: 3,
           verifyingContract: this.tokenAddress,
         },
@@ -163,7 +171,7 @@ export class MetamaskService {
         .request({
           method: "eth_signTypedData_v4",
           params: [userAddress, JSON.stringify(data)],
-        })
+        });
         /*
         .then((result) => {
           console.log(result)
@@ -172,11 +180,13 @@ export class MetamaskService {
           console.log(error)
         });
         */
-        ;
 
       const v = "0x" + signaturePrincipal.slice(130, 132);
       const r = signaturePrincipal.slice(0, 66);
       const s = "0x" + signaturePrincipal.slice(66, 130);
+
+      const packParams = this.prepend0x(this.packParams(userAddress, recipientAddress, amountBN.toString(10), 0, data.message.validBefore, data.message.nonce));
+      const packSigns = this.prepend0x(this.packSignatures(parseInt(v, 16),r,s));
 
       var approvesTxs = JSON.parse(localStorage.getItem('approvesTxs') || '[]');
 
@@ -185,7 +195,7 @@ export class MetamaskService {
       if (localStorage.getItem('approvesTxs') == null) {
         id = 1;
       } else {
-        id = localStorage.getItem('approvesTxs').length + 1;
+        id = JSON.parse(localStorage.getItem('approvesTxs')).length + 1 ;
       }
 
       approvesTxs.push({
@@ -201,6 +211,8 @@ export class MetamaskService {
         s: s,
         status: true,
         type: 'mainTx',
+        packParam: packParams,
+        packSign: packSigns
       });
 
       localStorage.setItem("approvesTxs", JSON.stringify(approvesTxs));
@@ -214,4 +226,53 @@ export class MetamaskService {
     }
   }
 
+  packParams(
+    from: string,
+    to: string,
+    value: number | string,
+    validAfter: number | string,
+    validBefore: number | string,
+    nonce: string
+  ): string {
+    return (
+      this.strip0x(from) +
+      this.strip0x(to) +
+      this.strip0x(
+        web3.eth.abi.encodeParameters(
+          ["uint256", "uint256", "uint256", "bytes32"],
+          [value, validAfter, validBefore, nonce]
+        )
+      )
+    );
+  }
+
+  packSignatures(v: number, r: string, s: string): string {
+    return v.toString(16).padStart(2, "0") + this.strip0x(r) + this.strip0x(s);
+  }
+
+  strip0x(any: string): string {
+    return any.replace(/^0x/, "");
+  }
+
+  prepend0x(any: string): string {
+    return any.replace(/^(0x)?/, "0x");
+  }
+
+/*
+  sendTxs() {
+    contract.methods.batchTransfer(123).send({ from: this.account})
+      .on('transactionHash', function (hash) {
+
+      })
+      .on('receipt', function (receipt) {
+
+      })
+      .on('confirmation', function (confirmationNumber, receipt) {
+
+      })
+      .on('error', function (error, receipt) {
+
+      });
+  }
+*/
 }

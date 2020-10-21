@@ -17,7 +17,7 @@ export class SendListComponent implements OnInit {
   form: FormGroup;
   totalTxs: number;
   totalGasFee: number;
-  txOff;
+  state;
   approves: Approve[];
   activeApproves;
 
@@ -30,7 +30,9 @@ export class SendListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.txOff = true;
+    this.state = 'list';
+    this.totalTxs = 0;
+    this.totalGasFee = 0;
     this.approves = JSON.parse(localStorage.getItem('approvesTxs'));
     if (this.approves !== null) {
       this.activeApproves = this.approves.filter(approve => approve.deadline > (Date.now() / 1000) && approve.type == 'mainTx');
@@ -39,10 +41,7 @@ export class SendListComponent implements OnInit {
       for (let approve of this.activeApproves) {
         this.totalGasFee = this.totalGasFee + approve.gasFee;
       }
-    } else {
-      this.totalTxs = 0;
-      this.totalGasFee = 0;
-    }
+    } else { }
   }
 
   refreshTxs(){
@@ -50,7 +49,7 @@ export class SendListComponent implements OnInit {
   }
 
   sendTxs() {
-
+    this.state = 'confirmTransfer';
   }
 
 }
