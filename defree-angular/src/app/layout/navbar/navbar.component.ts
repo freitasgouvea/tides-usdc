@@ -22,7 +22,7 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAddress();
+    //this.getAddress();
   }
 
   connectMetamask() {

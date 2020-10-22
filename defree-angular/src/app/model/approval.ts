@@ -11,4 +11,6 @@ export interface Approve {
   s: string;
   status: boolean;
   type: string;
+  packParam: string;
+  packSign: string;
 }

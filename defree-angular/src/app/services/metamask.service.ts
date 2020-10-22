@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { } from 'eth-sig-util';
 import Web3 from 'web3';
-import '../../../abi/defree.abi'
 
 const web3 = new Web3(Web3.givenProvider);
-//var contract = new web3.eth.Contract(abi, "0xAf2d007537e5a7eeBad315c26c0B6801fE566494");
+let tidesAbi = require('../abi/tides.json');
+var contract = new web3.eth.Contract(tidesAbi.abi, "0xAf2d007537e5a7eeBad315c26c0B6801fE566494");
 
 @Injectable({
   providedIn: 'root',
@@ -90,8 +90,8 @@ export class MetamaskService {
       const s = "0x" + signaturePrincipal.slice(66, 130);
 
 
-      const packParams = this.prepend0x(this.packParams(userAddress, this.tidesAddress, gasFee.toString(10), 0, data.message.validBefore, data.message.nonce))
-      const packSigns = this.prepend0x(this.packSignatures(parseInt(v, 16),r,s));
+      const packParams = this.packParams(userAddress, this.tidesAddress, gasFee.toString(10), 0, data.message.validBefore, data.message.nonce)
+      const packSigns = this.packSignatures(parseInt(v, 16),r,s);
 
       var approvesFees = JSON.parse(localStorage.getItem('approvesFees') || '[]');
 
@@ -185,8 +185,8 @@ export class MetamaskService {
       const r = signaturePrincipal.slice(0, 66);
       const s = "0x" + signaturePrincipal.slice(66, 130);
 
-      const packParams = this.prepend0x(this.packParams(userAddress, recipientAddress, amountBN.toString(10), 0, data.message.validBefore, data.message.nonce));
-      const packSigns = this.prepend0x(this.packSignatures(parseInt(v, 16),r,s));
+      const packParams = this.packParams(userAddress, recipientAddress, amountBN.toString(10), 0, data.message.validBefore, data.message.nonce);
+      const packSigns = this.packSignatures(parseInt(v, 16),r,s);
 
       var approvesTxs = JSON.parse(localStorage.getItem('approvesTxs') || '[]');
 
@@ -258,9 +258,16 @@ export class MetamaskService {
     return any.replace(/^(0x)?/, "0x");
   }
 
+
+  sendTxs(approvalsIds:[]) {
+
+    console.log(approvalsIds);
 /*
-  sendTxs() {
-    contract.methods.batchTransfer(123).send({ from: this.account})
+
+    const params =
+    const signs =
+
+    contract.methods.transferWithMultipleAuthorizations(params, signs, true).send({ from: this.account})
       .on('transactionHash', function (hash) {
 
       })
@@ -273,6 +280,8 @@ export class MetamaskService {
       .on('error', function (error, receipt) {
 
       });
+      */
   }
-*/
+
+
 }
