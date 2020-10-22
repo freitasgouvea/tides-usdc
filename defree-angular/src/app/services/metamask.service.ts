@@ -12,7 +12,7 @@ const web3 = new Web3(Web3.givenProvider);
 export class MetamaskService {
 
   account;
-  tokenAddress = "0xde137D57348E94721542601fA47e4aF14440700F";
+  tokenAddress = "0x07865c6E87B9F70255377e024ace6630C1Eaa37F";//USDC Ropsten
   tidesAddress = "0xAf2d007537e5a7eeBad315c26c0B6801fE566494";
 
   constructor() { }
@@ -54,7 +54,7 @@ export class MetamaskService {
           ],
         },
         domain: {
-          name: "USDC EIP3309",
+          name: "USD//C",
           version: 2,
           chainId: 3,
           verifyingContract: this.tokenAddress,
@@ -65,7 +65,7 @@ export class MetamaskService {
           to: this.tidesAddress,
           value: gasFee.toString(10),
           validAfter: 0,
-          validBefore: Math.floor(Date.now() / 1000) + 3600 * deadline,
+          validBefore: Math.floor(Date.now() / 1000) + ((3600 * deadline)),
           nonce: Web3.utils.randomHex(32),
         },
       };
@@ -151,7 +151,7 @@ export class MetamaskService {
           ],
         },
         domain: {
-          name: "USDC EIP3309",
+          name: "USD//C",
           version: 2,
           chainId: 3,
           verifyingContract: this.tokenAddress,
@@ -162,7 +162,7 @@ export class MetamaskService {
           to: recipientAddress,
           value: amountBN.toString(10),
           validAfter: 0,
-          validBefore: Math.floor(Date.now() / 1000) + 3600 * deadline,
+          validBefore: Math.floor(Date.now() / 1000) + (3600 * deadline),
           nonce: Web3.utils.randomHex(32),
         },
       };
