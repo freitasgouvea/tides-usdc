@@ -3,11 +3,16 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
+    "postinstall": "ng build --aot --prod",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
+  },
+  "engines": {
+    "node": "10.13.0",
+    "npm": "6.4.1"
   },
   "private": true,
   "dependencies": {
@@ -23,6 +28,7 @@
     "@ng-bootstrap/ng-bootstrap": "^7.0.0",
     "bootstrap": "^4.5.0",
     "eth-sig-util": "^2.5.3",
+    "express": "^4.17.1",
     "ngx-custom-validators": "^10.0.0",
     "ngx-spinner": "^10.0.1",
     "rxjs": "~6.5.5",
