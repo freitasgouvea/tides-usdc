@@ -1,5 +1,5 @@
 //SPDX-License-Identifier: MIT
-// Implementation Based on USDC-EIP-3009: https://github.com/CoinbaseStablecoin/eip-3009/tree/master/contracts
+// Implementation Based on USDC-EIP-3009 Util Example: https://github.com/centrehq/centre-tokens/blob/master/contracts/v2/FiatTokenUtil.sol
 
 pragma solidity 0.6.12;
 
@@ -277,7 +277,7 @@ contract Tides {
      * @param msg.sender of transferWithMultipleAuthorizations (address)
      * @return True (boolean)
      */
-    function SendGasTips(address caller) public payable returns(bool){
+    function SendGasTips(address caller) internal returns(bool){
        uint256 balance = IERC20_EIP3009(USDCAddress).balanceOf(address(this));
        IERC20_EIP3009(USDCAddress).transfer(caller, balance);
        return true;
