@@ -3,7 +3,7 @@ Gasless erc-20 transfer and deposits
 
 ## Info
 
-ETH GLOBAL HACKATHON PROJECT
+ETH ONLINE HACKATHON PROJECT - 2020
 
 Tides Gas Saver
 
