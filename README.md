@@ -5,7 +5,9 @@ Gasless erc-20 transfer and deposits
 
 ETH GLOBAL HACKATHON PROJECT
 
-UNDER CONSTRUCTION
+Tides Gas Saver
+
+See showcase: https://hack.ethglobal.co/showcase/tides-gas-saver-recvv48DZZzuiubf0
 
 Author: Flávio Gouvea 
 Email: flaviogouveaneto@gmail.com 
