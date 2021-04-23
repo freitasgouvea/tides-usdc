@@ -1,4 +1,4 @@
-# Defree - Tides
+Tides
 
 USDC gas saver
 
